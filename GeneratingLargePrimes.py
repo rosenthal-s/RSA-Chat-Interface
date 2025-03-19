@@ -4,7 +4,6 @@
 import random
 
 
-
 # The sieve of Eratosthenes is a method to find early prime numbers.
 # This function returns a list of primes up to n.
 def sieveOfEratosthenes( n ):
@@ -29,17 +28,14 @@ def sieveOfEratosthenes( n ):
     return first_primes_list
 
 
-
 ## Returns a random number between 2**(n-1)+1 and 2**n-1
 #def nBitRandom( n ):
 #    return random.randrange( 2**(n-1) + 1, 2**n - 1 )
 
 
-
 ## Returns a random odd number between 2**(n-1)+1 and 2**n-1
 def nBitRandomOdd( n ):
     return random.randrange( 2**(n-1) + 1, 2**n, 2 )
-
 
 
 ## Generate a prime candidate divisible by first primes
@@ -68,7 +64,6 @@ def getLowLevelPrime( number_of_bits, first_primes_list ):
         if isPrime:
 #            print("return v2") ###
             return candidate_prime
-
 
 
 ## Run 20 iterations of the Miller Rabin Primality Test.
@@ -105,7 +100,6 @@ def isMillerRabinPassed( candidate_prime ):
     return True
 
 
-
 def genPrime( number_of_bits ):
     first_primes_list = sieveOfEratosthenes( 350 )
 
@@ -114,7 +108,6 @@ def genPrime( number_of_bits ):
 
         if isMillerRabinPassed( candidate_prime ):
             return candidate_prime
-
 
 
 if __name__ == '__main__':
