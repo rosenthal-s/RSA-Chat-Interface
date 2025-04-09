@@ -53,14 +53,12 @@ def intToString(i):
 
 
 ## Generate a pair of public and private keys for RSA encryption
-def genKeys():
-    numBits = 1024
-
-    first_prime  = GenPrimes.genPrime(numBits)
-    second_prime = GenPrimes.genPrime(numBits)
+def genKeys(num_bits):
+    first_prime  = GenPrimes.genPrime(num_bits)
+    second_prime = GenPrimes.genPrime(num_bits)
     # Very unlikely, but just want to make sure the two primes are different
     while first_prime == second_prime:
-        second_prime = GenPrimes.genPrime(numBits)
+        second_prime = GenPrimes.genPrime(num_bits)
 
     product_of_primes = first_prime * second_prime
 
@@ -84,27 +82,27 @@ def genKeys():
     # and so e*x ≡ 1 (mod Φ(n)) and therefore d = x.
     decryption_exponent = modInverse(encryption_exponent, eulers_totient)
 
-    print(f"First {numBits}-bit prime: {first_prime}")
-    print(f"\nSecond {numBits}-bit prime: {second_prime}")
-    print("\nProduct of primes:", product_of_primes)
-    print("\nEuler's totient:", eulers_totient)
-    print("\nEncryption exponent:", encryption_exponent)
-    print("\nDecryption exponent:", decryption_exponent)
-    
-    print(f"\n\nThe public key (e, p): ({encryption_exponent}, {product_of_primes})")
-    print(f"\nThe private key (d, p): ({decryption_exponent}, {product_of_primes})")
+    # print(f"First {numBits}-bit prime: {first_prime}")
+    # print(f"\nSecond {numBits}-bit prime: {second_prime}")
+    # print(f"\nProduct of primes: {product_of_primes}")
+    # print(f"\nEuler's totient: {eulers_totient}")
+    # print(f"\nEncryption exponent: {encryption_exponent}")
+    # print(f"\nDecryption exponent: {decryption_exponent}\n\n")
 
     return encryption_exponent, decryption_exponent, product_of_primes
 
 
 if __name__ == '__main__':
-    encryption_exponent, decryption_exponent, product_of_primes = genKeys()
+    encryption_exponent, decryption_exponent, product_of_primes = genKeys(1024)
+    
+    print(f"The public key (e, p): ({encryption_exponent}, {product_of_primes})")
+    print(f"\nThe private key (d, p): ({decryption_exponent}, {product_of_primes})\n\n")
 
     # Provide a message, then convert the text to UTF-8
-    message = "Hello world!" ###Test value
+    message = input("Enter a message to encrypt\n")
     message_UTF = stringToInt(message)
-    print("\n\n\nMessage in UTF-8:", message_UTF)
-    print("Original message:", intToString(message_UTF))
+    print("\nOriginal message:", intToString(message_UTF))
+    print("Message in UTF-8:", message_UTF)
 
     # The message is encrypted by multiplying it to the power of the encryption exponent, modulo to the product of the primes
     encrypted_message_UTF = pow(message_UTF, encryption_exponent, product_of_primes)

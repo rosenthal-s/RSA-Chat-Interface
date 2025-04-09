@@ -1,0 +1,33 @@
+import socket
+import RSA
+
+def connectToServer():
+    # Create a socket at client-side using TCP/IP protocol
+    s = socket.socket()
+    
+    # Connect it to server and port numbers on local computer.
+    port = 5000
+    s.connect(('127.0.0.1', port))
+
+    return s
+
+if __name__ == '__main__':
+    s = connectToServer()
+
+    encryption_exponent = int.from_bytes(s.recv(1024))
+    product_of_primes = int.from_bytes(s.recv(1024))
+    print("Public key received: (", encryption_exponent, ", ", product_of_primes, ")\n", sep="")
+
+    # Begin sending encrypted messages to the server
+    while True:
+        message = input("\nEnter a message to encrypt, or enter nothing to finish\n")
+        if message == "":
+            break
+        
+        # Encrypt the message then send it
+        encrypted_message = pow(RSA.stringToInt(message), encryption_exponent, product_of_primes)
+        print("Encrypted message:", encrypted_message)
+        s.send(encrypted_message.to_bytes(256))
+
+    # Disconnect the client
+    s.close()
