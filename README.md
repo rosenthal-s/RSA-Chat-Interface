@@ -1,0 +1,2 @@
+A personal project I chose to teach myself a couple of concepts. RSA is a widely-used method of securing communications over the internet.
+I first manually implemented RSA, by generating large primes and then using them to produce the public and private key used by the encryption algorithm. I then produced a pair of programs which communicate through sockets, one which sends encrypted messages and the other which receives and decrypts them.
